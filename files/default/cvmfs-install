@@ -1,0 +1,164 @@
+#!/usr/bin/env bash
+#
+# Copyright 2013 Victor Penso
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+_version=0.1
+
+# Filename of this script
+_script=$(basename $0)
+
+# Help text for this script
+function _help() {
+  echo "Usage: $_script [OPTIONS] [VERSION]
+  
+OPTIONS
+
+  -b,--build-only
+    Do not install the binaries.
+  -d, --debug
+    Print debug messages
+  -h, --help
+    Show this test."
+}
+
+# enable line numbers for debug output
+if [ "$_DEBUG" = "true" ] ; then
+  export PS4='(${BASH_SOURCE}:${LINENO}):${FUNCNAME[0]}-[${SHLVL},${BASH_SUBSHELL},$?] '
+fi
+function _debug() {
+  if [ "$_DEBUG" = "true" ]; then
+    echo 1>&2 "DEBUG: $@"
+  fi
+}
+
+function _error() {
+  echo 1>&2 "ERROR: $@"
+}
+
+# Parse the command line options
+ARGS=$(getopt -o hdb -l "help;debug;build-only" -- "$@")
+eval set -- "$ARGS"
+while true; do
+  case "$1" in
+    -b|--build-only)
+      BUILD_ONLY=true
+      shift
+      ;;
+    -d|--debug)
+      _DEBUG=true
+      shift
+      ;;
+    -h|--help)
+      _help
+      exit 0
+      ;;
+    --) shift; break ;;
+    *) break ;;
+  esac
+done
+
+# Does the caller provided a version?
+version=$1 ; shift
+if [ -f $version ] ; then
+  _error "No version defined!"
+  _help
+  exit 1
+fi
+
+# list of dependency packages
+packages="build-essential 
+          attr
+          curl 
+          cmake
+          libcurl3 
+          libcurl4-openssl-dev 
+          chkconfig
+          sqlite3
+          libsqlite3-dev
+          autofs5
+          fuse-utils
+          libfuse-dev
+          libattr1-dev
+          linux-headers-$(uname -r)"
+# install all dependencies
+export DEBIAN_FRONTEND=noninteractive
+for package in $packages ; do
+  apt-get -qqy install $package 1>/dev/null 2>/dev/null
+  if [[ $? != 0 ]] ; then
+    _error "Couldn't install package $package"
+    exit 1
+  fi
+  _debug "Package $package installed."
+done
+echo "All build dependencies available."
+
+# developers source code URL
+source_uri=https://ecsft.cern.ch/dist/cvmfs/cvmfs-$version/cvmfs_$version.tar.gz
+
+# target build directory
+build_directory=/usr/local/src
+mkdir -p $build_directory 2>/dev/null
+
+# source code archive
+source_file=$build_directory/cvmfs_$version.tar.gz
+# get the source code
+if [ ! -f $source_file ] ; then
+  _debug "Download CVMFS $version to $build_directory"
+  curl --insecure --silent --show-error --output $source_file $source_uri
+fi
+
+if [ ! -d $build_directory/cvmfs-$version ] ; then
+  _debug "Extract source archive to $build_directory"
+  tar --extract --gzip --file  $source_file --directory $build_directory
+fi 
+
+cd $build_directory/cvmfs-$version
+
+echo "Working directory $PWD"
+
+_debug "Execute Cmake to configure the build process"
+
+cmake . > configure.log 2>&1
+if [[ $? != 0 ]] ; then
+  _error "Configure failed!"
+  exit 1
+fi
+
+echo "Configure finished."
+
+# build the source code
+_debug "Run make to build the binary code."
+
+make > build.log 2>&1
+if [[ $? != 0 ]] ; then
+  _error "Build failed!" 
+  exit 1
+fi
+
+echo "Build finished."
+
+if [ ! "$BUILD_ONLY" = "true" ] ; then 
+  # deploy the software
+  make install > $PWD/install.log
+  echo "Installation finished."
+fi
+
+cd - 1>/dev/null
+
+exit 0
+
+
