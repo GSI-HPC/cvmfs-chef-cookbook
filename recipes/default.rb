@@ -17,4 +17,18 @@
 # limitations under the License.
 #
 
-include_recipe 'cvmfs::server'
+unless node.cvmfs.version.empty?
+  version =  node.cvmfs.version
+  unless ::File.exists? '/etc/cvmfs'
+    cookbook_file '/usr/local/src/cvmfs-install' do
+      source 'cvmfs-install'
+      mode '0755'
+    end
+    # This is a self-contained shell script installing 
+    # CVMFS from a source code tar ball downloaded
+    # from the developers web-site.
+    execute "/usr/local/src/cvmfs-install #{version}"
+  end
+end
+
+include_recipe 'cvmfs::server' unless node.cvmfs.server.repos.empty?

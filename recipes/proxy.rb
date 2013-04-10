@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cvmfs
-# Recipe:: server
+# Recipe:: proxy
 #
 # Copyright 2013, Victor Penso
 #
@@ -17,16 +17,17 @@
 # limitations under the License.
 #
 
-include_recipe 'apache2'
-include_recipe 'apache2::mod_rewrite'
-include_recipe 'apache2::mod_expires'
+package 'squid3'
 
-apache_site '000-default' do
-  enable false
+template '/etc/squid3/squid.conf' do
+  source 'etc_squid3_squid.conf.erb'
+  mode '0644'
+  variables :access => node.cvmfs.proxy.access
+  notifies :restart, 'service[squid3]'
 end
 
-node.cvmfs.server.repos.each do |repo|
-  execute "cvmfs_server -o root mkfs #{repo}" do
-    not_if do ::File.directory? "/etc/cvmfs/repositories.d/#{repo}" end
-  end
+service 'squid3' do
+  supports :restart => true
+  action :enable
 end
+
