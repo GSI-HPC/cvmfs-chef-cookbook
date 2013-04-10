@@ -25,8 +25,9 @@ apache_site '000-default' do
   enable false
 end
 
+# Initialize the repositories unless they exist
 node.cvmfs.server.repos.each do |repo|
-  execute "cvmfs_server -o root mkfs #{repo}" do
+  execute "cvmfs_server mkfs -o root #{repo}" do
     not_if do ::File.directory? "/etc/cvmfs/repositories.d/#{repo}" end
   end
 end

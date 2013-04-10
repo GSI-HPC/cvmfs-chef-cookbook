@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cvmfs
-# Recipe:: proxy
+# Recipe:: client
 #
 # Copyright 2013, Victor Penso
 #
@@ -16,18 +16,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-package 'squid3'
-
-template '/etc/squid3/squid.conf' do
-  source 'etc_squid3_squid.conf.erb'
-  mode '0644'
-  variables :access => node.cvmfs.proxy.access
-  notifies :restart, 'service[squid3]'
-end
-
-service 'squid3' do
-  supports :restart => true
-  action :enable
-end
 

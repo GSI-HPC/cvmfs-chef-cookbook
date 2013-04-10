@@ -31,4 +31,8 @@ unless node.cvmfs.version.empty?
   end
 end
 
-include_recipe 'cvmfs::server' unless node.cvmfs.server.repos.empty?
+if node.cvmfs.server.repos.empty?
+  include_recipe 'cvmfs::client'
+else
+  include_recipe 'cvmfs::server'
+end
