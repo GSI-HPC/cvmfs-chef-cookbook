@@ -63,7 +63,7 @@ Deploy the HTTP proxy:
 
 ## Clients
 
-Make sure FUSE is correctly configured
+Make sure FUSE is correctly configured:
 
     » chgrp fuse /dev/fuse
     » chmod 0660 /dev/fuse
@@ -73,6 +73,8 @@ Make sure FUSE is correctly configured
     user_allow_other # added by CernVM-FS
     » cvmfs_config chksetup
     OK
+
+Configure the CVMFS client:
 
     » cat /etc/cvmfs/default.local 
     CVMFS_REPOSITORIES="repo.devops.test"
@@ -86,6 +88,8 @@ Make sure FUSE is correctly configured
     » cvmfs_config chksetup
     OK
 
+Mount the repository:
+
     » mkdir -p /cvmfs/repo.devops.test
     » mount -t cvmfs repo.devops.test /cvmfs/repo.devops.test/
     CernVM-FS: running with credentials 999:999
@@ -93,7 +97,6 @@ Make sure FUSE is correctly configured
     CernVM-FS: mounted cvmfs on /cvmfs/repo.devops.test/
     » cvmfs_config probe
     Probing /cvmfs/repo.devops.test... OK
-
 
 [1] [CernVM-FS Downloads][1]
 [2] [CernVM-FS Technical Information][2]
