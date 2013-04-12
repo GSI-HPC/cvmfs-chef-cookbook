@@ -18,16 +18,12 @@
 #
 
 node.default[:sys][:autofs][:master][:'/cvmfs'][:map] = '/etc/auto.cvmfs'
-
 include_recipe 'sys::autofs'
 
 # Make sure the CMVFS user can use FUSE 
 # to mount a repositories 
-node.default[:sys][:fuse][:config] = {
-  'mount_max' => 1000,
-  'user_allow_other' => ''
-}
-# Deploy the changes using the Sys cookbook
+node.default[:sys][:fuse][:config][:mount_max] = 1000
+node.default[:sys][:fuse][:config][:user_allow_other] = ''
 include_recipe 'sys::fuse'
 
 user 'cvmfs' do
@@ -45,10 +41,6 @@ directory node.cvmfs.client.default_local.cache_base do
   mode '0755'
   recursive true
 end
-
-#unless node.cvmfs.client.default_local.has_key? 'repositories'
-#  node.default[:cvmfs][:client][:default_local][:repositories] = "#{node.cvmfs.client.config_d.join(',')}"
-#end
 
 template '/etc/cvmfs/default.local' do
   source 'etc_cvmfs_default.local.erb'
