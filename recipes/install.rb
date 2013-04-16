@@ -17,14 +17,17 @@
 # limitations under the License.
 #
 
-unless ::File.exists? '/etc/cvmfs/default.conf'
-  cookbook_file '/usr/local/src/cvmfs-install' do
-    source 'cvmfs-install'
-    mode '0755'
-  end
-  # This is a self-contained shell script installing 
-  # CVMFS from a source code tar ball downloaded
-  # from the developers web-site.
-  execute "/usr/local/src/cvmfs-install #{node.cvmfs.version}"
-end
+unless node.cvmfs.version.empty?
 
+  unless ::File.exists? '/etc/cvmfs/default.conf'
+    cookbook_file '/usr/local/src/cvmfs-install' do
+      source 'cvmfs-install'
+      mode '0755'
+    end
+    # This is a self-contained shell script installing 
+    # CVMFS from a source code tar ball downloaded
+    # from the developers web-site.
+    execute "/usr/local/src/cvmfs-install #{node.cvmfs.version}"
+  end
+
+end

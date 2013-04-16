@@ -114,7 +114,7 @@ build_directory=/usr/local/src
 mkdir -p $build_directory 2>/dev/null
 
 # source code archive
-source_file=$build_directory/cvmfs_$version.tar.gz
+source_file=$build_directory/cvmfs_$version.orig.tar.gz
 # get the source code
 if [ ! -f $source_file ] ; then
   _debug "Download CVMFS $version to $build_directory"
