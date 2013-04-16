@@ -50,12 +50,16 @@ function _error() {
 }
 
 # Parse the command line options
-ARGS=$(getopt -o hdb -l "help;debug;build-only" -- "$@")
+ARGS=$(getopt -o hdbp -l "help;debug;build-only;build-package" -- "$@")
 eval set -- "$ARGS"
 while true; do
   case "$1" in
     -b|--build-only)
       BUILD_ONLY=true
+      shift
+      ;;
+    -p|--build-package)
+      BUILD_PACKAGE=true
       shift
       ;;
     -d|--debug)
@@ -80,7 +84,10 @@ if [ -f $version ] ; then
 fi
 
 # list of dependency packages
-packages="build-essential 
+packages="build-essential
+          autotools-dev
+          debhelper
+          devscripts
           attr
           curl 
           cmake
@@ -134,7 +141,7 @@ _debug "Execute Cmake to configure the build process"
 
 cmake . > configure.log 2>&1
 if [[ $? != 0 ]] ; then
-  _error "Configure failed!"
+  _error "Configure failed! Check $PWD/configure.log"
   exit 1
 fi
 
@@ -145,11 +152,22 @@ _debug "Run make to build the binary code."
 
 make > build.log 2>&1
 if [[ $? != 0 ]] ; then
-  _error "Build failed!" 
+  _error "Build failed! Check $PWD/build.log" 
   exit 1
 fi
 
 echo "Build finished."
+
+if [ "$BUILD_PACKAGE" = "true" ] ; then
+  _debug "Build Debian package."
+  debuild -us -uc > build-package.log 2>&1
+  if [[ $? != 0 ]] ; then
+    _error "Package build failed! Check $PWD/build-package.log"
+    exit 1
+  fi
+  echo "Packages should be available in $build_directory"
+  exit 0
+fi
 
 if [ ! "$BUILD_ONLY" = "true" ] ; then 
   # deploy the software
