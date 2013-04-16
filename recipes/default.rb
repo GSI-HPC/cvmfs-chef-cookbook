@@ -18,7 +18,7 @@
 #
 
 # Install from source if a specific version is defined 
-include_recipe 'cvmfs::install' unless node.cvmfs.version.empty?
+include_recipe 'cvmfs::install'
 
 if node.cvmfs.server.repos.empty?
   include_recipe 'cvmfs::client'
