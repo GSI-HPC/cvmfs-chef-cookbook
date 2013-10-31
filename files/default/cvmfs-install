@@ -23,16 +23,20 @@ _script=$(basename $0)
 
 # Help text for this script
 function _help() {
-  echo "Usage: $_script [OPTIONS] [VERSION]
-  
-OPTIONS
+  echo "Usage: 
+Install CVMFS locally  and/or build Debian packages. 
 
+$_script [-bdhp] VERSION
+  
+Options:
   -b,--build-only
     Do not install the binaries.
   -d, --debug
     Print debug messages
   -h, --help
-    Show this test."
+    Show this test.
+  -p,--build-package
+    Build Debian packages."
 }
 
 # enable line numbers for debug output
