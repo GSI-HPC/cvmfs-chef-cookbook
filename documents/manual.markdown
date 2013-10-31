@@ -1,6 +1,6 @@
-The script `files/default/cvmfs-install` deploys a specific 
-version of CernVM-FS [1] on the local node. Copy the script to
-`/usr/local/src` and execute it like:
+# Deployment
+
+The script `files/default/cvmfs-install` deploys a specific version of CernVM-FS [1] locally. Copy this script to `/usr/local/src` and execute (as root):
 
     » lsb_release -d
     Description:    Debian GNU/Linux 7.0 (wheezy)
@@ -11,7 +11,7 @@ version of CernVM-FS [1] on the local node. Copy the script to
     Build finished.
     Installation finished.
 
-Alternatively build a Debian package and install it:
+Alternatively build a Debian package and install CVMFS using the package:
 
     » /usr/local/src/cvmfs-install -p 2.1.15
     All build dependencies available.
@@ -29,17 +29,20 @@ Alternatively build a Debian package and install it:
     -rw-r--r--  1 root staff 25151434 Oct 31 13:54 cvmfs_2.1.15.orig.tar.gz
     -rw-r--r--  1 root staff 51782134 Oct 31 14:01 cvmfs_2.1.15.tar.gz
     […]
-    » dpkg -i /usr/local/src/cvmfs_2.1.15_amd64.deb 
+    » apt-get install $(dpkg -f cvmfs_2.1.15_amd64.deb depends | tr -d ',')
+    » dpkg -i cvmfs_2.1.15_amd64.deb 
 
+It is recommended to test the package inside a clean environment (different node), before shipping to a package mirror.
+
+# Configuration
 
 ## Server
 
-This install Apache before creating a CernVM-FS file-system
-repository:
+This install Apache before creating a CernVM-FS file-system repository:
 
     » apt-get install apache2
     » cvmfs_server mkfs repo.devops.test
-    [...SNIP...]
+    […]
     » cvmfs_server transaction
     » df -h -t aufs -t fuse
     Filesystem             Size  Used Avail Use% Mounted on
@@ -48,9 +51,7 @@ repository:
     » ls -1 /cvmfs/repo.devops.test
     new_repository
 
-Details are described in the CernVM-FS Technical Report [2].
-In order to update the repository (add/remove content) use
-the `cvmfs_server` script:
+Details are described in the CernVM-FS Technical Report [2].  In order to update the repository (add/remove content) use the `cvmfs_server` script:
 
     » cvmfs_server transaction
     » echo "Content" > /cvmfs/repo.devops.test/test.txt
@@ -77,8 +78,6 @@ Deploy the HTTP proxy:
     acl devops src 10.1.1.0/24
     http_access allow devops
     » /etc/init.d/squid3 restart
-
-
 
 ## Clients
 

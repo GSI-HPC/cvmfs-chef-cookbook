@@ -18,10 +18,15 @@
 #
 
 # Install from source if a specific version is defined 
-include_recipe 'cvmfs::install'
+unless node.cvmfs.version.empty?
+  include_recipe 'cernvm-fs::install'
+# Otherwise it is assumed a package can be installed
+else
+  package 'cvmfs'
+end
 
 if node.cvmfs.server.repos.empty?
-  include_recipe 'cvmfs::client'
+  include_recipe 'cernvm-fs::client'
 else
-  include_recipe 'cvmfs::server'
+  include_recipe 'cernvm-fs::server'
 end
