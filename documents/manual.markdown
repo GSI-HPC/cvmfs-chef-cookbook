@@ -1,5 +1,3 @@
-
-
 The script `files/default/cvmfs-install` deploys a specific 
 version of CernVM-FS [1] on the local node. Copy the script to
 `/usr/local/src` and execute it like:
@@ -12,6 +10,27 @@ version of CernVM-FS [1] on the local node. Copy the script to
     Configure finished.
     Build finished.
     Installation finished.
+
+Alternatively build a Debian package and install it:
+
+    » /usr/local/src/cvmfs-install -p 2.1.15
+    All build dependencies available.
+    Working directory /usr/local/src/cvmfs-2.1.15
+    Configure finished.
+    Build finished.
+    Packages should be available in /usr/local/src
+    » ls -l /usr/local/src/
+    total 87484
+    drwxrwxr-x 13 root root      4096 Oct 31 14:01 cvmfs-2.1.15
+    -rw-r--r--  1 root staff    25183 Oct 31 14:02 cvmfs_2.1.15_amd64.build
+    -rw-r--r--  1 root staff     1127 Oct 31 14:01 cvmfs_2.1.15_amd64.changes
+    -rw-r--r--  1 root staff 12599844 Oct 31 14:01 cvmfs_2.1.15_amd64.deb
+    -rw-r--r--  1 root staff      642 Oct 31 14:01 cvmfs_2.1.15.dsc
+    -rw-r--r--  1 root staff 25151434 Oct 31 13:54 cvmfs_2.1.15.orig.tar.gz
+    -rw-r--r--  1 root staff 51782134 Oct 31 14:01 cvmfs_2.1.15.tar.gz
+    […]
+    » dpkg -i /usr/local/src/cvmfs_2.1.15_amd64.deb 
+
 
 ## Server
 
