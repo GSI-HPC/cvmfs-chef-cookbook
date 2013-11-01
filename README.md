@@ -1,7 +1,7 @@
 Description
-===========
+-----------
 
-The "cvmfs" cookbook deploys [CernVM File System][1] (CernVM-FS).
+The "cernvm-fs" cookbook deploys and configures [CernVM-FS][1] (CVMFS) infrastructure.
 
 **Requirements**
 
@@ -13,14 +13,27 @@ The "cvmfs" cookbook deploys [CernVM File System][1] (CernVM-FS).
 * Debian 7 (Wheezy)
 * No other platforms supported yet.
 
-In order to develop this cookbook are for basic understanding
-read the “[Manual Deployment][3]” guide.
-
 Usage
-=====
+-----
 
+For basic understanding of CVMFS read the “[Manual Deployment][3]” guide. Deployment and configuration of CVMFS servers is described in the [Server Guide][4]. Mount CVMFS repositories on client nodes as explained in the [Client Guide][5].
+
+License
+-------
+
+Author: Victor Penso (v.penso@gsi.de)
+
+Copyright 2013, GSI, HPC Department
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 
 [1]: http://cernvm.cern.ch/portal/filesystem
-[2]: https://github.com/vpenso/sys-chef-cookbook
+[2]: https://github.com/GSI-HPC/sys-chef-cookbook
 [3]: documents/manual.markdown
+[4]: documents/server.makrdown
+[5]: documents/client.makrdown
