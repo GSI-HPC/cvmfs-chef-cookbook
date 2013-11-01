@@ -11,7 +11,7 @@ The script `files/default/cvmfs-install` deploys a specific version of CernVM-FS
     Build finished.
     Installation finished.
 
-Alternatively build a Debian package and install CVMFS using the package:
+Alternatively build a Debian package to install CVMFS:
 
     » /usr/local/src/cvmfs-install -p 2.1.15
     All build dependencies available.
