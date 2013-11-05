@@ -3,6 +3,8 @@ Description
 
 The "cernvm-fs" cookbook deploys and configures [CernVM-FS][1] (CVMFS) infrastructure.
 
+_CernVM File System (CernVM-FS) is a network file system based on HTTP and optimized to deliver software in a fast, scalable, and reliable way. Files and file meta-data are cached and downloaded on demand. Thereby the CernVM-FS decouples the life cycle management of the application software releases from the operating system._
+
 **Requirements**
 
 * Chef version >=10.12
@@ -16,7 +18,7 @@ The "cernvm-fs" cookbook deploys and configures [CernVM-FS][1] (CVMFS) infrastru
 Usage
 -----
 
-For basic understanding of CVMFS read the “[Manual Deployment][3]” guide. Deployment and configuration of CVMFS servers is described in the [Server Guide][4]. Mount CVMFS repositories on client nodes as explained in the [Client Guide][5].
+Read the “[Manual Deployment][3]” guide for a very simple example. Deployment and configuration of CVMFS servers is described in the [Server Guide][4]. Mount CVMFS repositories on client nodes as explained in the [Client Guide][5].
 
 License
 -------
