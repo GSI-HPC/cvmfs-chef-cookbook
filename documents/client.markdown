@@ -12,6 +12,8 @@ Mount CernVM-FS repositories.
 Attributes
 ----------
 
+Deploy the public keys to CVMFS servers with attributes in `node.cvmfs.keys`. 
+
 The default configuration (affecting all mounted repositories) is defined with attributes in `node.cvmfs.default_local`, and written to `/etc/cvmfs/default.local`.
 
 * `cache_base` (default `/var/cache/cvmfs`) – Path to the local repository cache.
@@ -50,6 +52,9 @@ Mount several CVMFS repositories:
             "quota_limit" => 20000
           }      
         }
+      },
+      "keys" => {
+        "alpha.devops.test.pub" => "…"
       }
     }
 
