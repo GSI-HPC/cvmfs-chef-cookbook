@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node.default[:sys][:autofs][:master][:'/cvmfs'][:map] = '/etc/auto.cvmfs'
+node.default[:sys][:autofs][:maps][:'/cvmfs'][:map] = '/etc/auto.cvmfs'
 include_recipe 'sys::autofs'
 
 # Make sure the CMVFS user can use FUSE 
@@ -54,11 +54,16 @@ directory '/etc/cvmfs/config.d'
 # Each repository needs its configuration file
 unless node.cvmfs.client.config_d.empty?
   node.cvmfs.client.config_d.each do |repo,config|
-    template "/etc/cvmfs/config.d/#{repo}.local" do
-      source 'etc_cvmfs_config.d_generic.local.erb'
+
+    config['http_proxy'] = 'DIRECT' unless config.has_key? 'http_proxy'
+
+    template "/etc/cvmfs/config.d/#{repo}.conf" do
+      source 'etc_cvmfs_config.d_generic.conf.erb'
       mode "0644"
       variables( :repo => repo, :config => config )
     end
+
+
   end
 end
 

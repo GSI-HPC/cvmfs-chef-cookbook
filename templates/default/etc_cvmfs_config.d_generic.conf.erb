@@ -1,10 +1,9 @@
-# /etc/cvmfs/default.local
+# /etc/cvmfs/config.d/<%= @repo %>.local
 #
 # DO NOT CHANGE THIS FILE MANUALLY!
 #
 # This file is managed by the Chef `cvmfs::client` cookbook.
 
-CVMFS_REPOSITORIES="<%= @repos.join(',') %>"
 <% @config.each do |key,value| %>
-CVMFS_<%= key.upcase %>=<%= value %>
+CVMFS_<%= key.upcase %>="<%= value %>"
 <% end %>
