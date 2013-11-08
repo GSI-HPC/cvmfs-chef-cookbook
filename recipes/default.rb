@@ -23,6 +23,14 @@ else
   package 'cvmfs'
 end
 
+# Deploy files to the /etc/cvmfs/keys directory
+node.cvmfs[:keys].each do |name,key|
+  file "/etc/cvmfs/keys/#{name}" do
+    mode "0644"
+    content key.gsub(/^ */,'')
+  end
+end
+
 if node.cvmfs.server.repos.empty?
   include_recipe 'cernvm-fs::client'
 else
