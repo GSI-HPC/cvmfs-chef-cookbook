@@ -6,12 +6,12 @@ default_attributes(
     "client" => {
       "config_d" => {
         "alpha.devops.test" => {
-          "server_url" => "http://lxfs01.devops.test/cvmfs/@org@",
+          "server_url" => "http://lxfs01.devops.test/cvmfs/alpha.devops.test",
           "http_proxy" => "DIRECT",
           "public_key" => "/etc/cvmfs/keys/alpha.devops.test.pub"
         },
         "betta.devops.test" => {
-          "server_url" => "http://lxfs02.devops.test/cvmfs/@org@",
+          "server_url" => "http://lxfs02.devops.test/cvmfs/betta.devops.test",
           "public_key" => "/etc/cvmfs/keys/betta.devops.test.pub"
         }      
       }  
