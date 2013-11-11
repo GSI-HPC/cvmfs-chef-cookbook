@@ -15,7 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 # The cvmfs user operates all remote actions on the CVMFS servers
 user 'cvmfs' 
 
@@ -33,7 +32,7 @@ node.cvmfs.remote.each_pair do |repo,config|
   group maintainer do
     members ['cvmfs'] << maintainers
   end
- 
+
   directory "/cvmfs/#{repo}" do
     group maintainer
     mode '0775'
@@ -44,7 +43,7 @@ node.cvmfs.remote.each_pair do |repo,config|
   file rsync_exclude do
     mode "0770"
     group maintainer
-    content ".svn/*\n.libs/*\n.deps/*\n*.o"
+    content ".svn/*\n.libs/*\n.deps/*\n*.o\n"
     # The excludes for Rsync will be modified by users eventually 
     not_if do ::File.exists? rsync_exclude end
   end
@@ -56,9 +55,10 @@ node.cvmfs.remote.each_pair do |repo,config|
     'StrictHostKeyChecking' => 'no'
   }
 
-  sys_sudo repo do
+  # Allow all maintainers to execute the remote publishing script
+  sys_sudo maintainer do
     users maintainer.upcase => maintainers
-    rules ["#{maintainer.upcase} #{node.fqdn}=NOPASSWD:/sbin/cvmfs * #{repo}"]
+    rules ["#{maintainer.upcase} #{node.fqdn}=NOPASSWD:/sbin/cvmfs-remote * #{repo}"]
   end
 
 end

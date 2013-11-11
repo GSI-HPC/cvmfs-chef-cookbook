@@ -25,6 +25,10 @@ apache_site '000-default' do
   enable false
 end
 
+user 'cvmfs' do
+  shell '/bin/bash'
+end
+
 # Initialize the repositories unless they exist
 node.cvmfs.server.repos.each do |repo|
   execute "cvmfs_server mkfs -o root #{repo}" do
