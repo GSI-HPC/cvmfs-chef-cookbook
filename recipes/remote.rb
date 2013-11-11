@@ -36,6 +36,7 @@ node.cvmfs.remote.each_pair do |repo,config|
  
   directory "/cvmfs/#{repo}" do
     group maintainer
+    mode '0775'
     recursive true
   end
 
@@ -74,13 +75,14 @@ sys_ssh_config 'cvmfs' do
 end
 
 if node.cvmfs.remote_key.empty?
-  Chef::Log.warn("No login SSH key to CVMFS servers provided")
+  Chef::Log.warn("No SSH login key to CVMFS servers provided")
 else
   file '/home/cvmfs/.ssh/id_rsa' do
+    content node.cvmfs.remote_key.gsub(/^ */,'').gsub(/^$\n/,'')
     owner 'cvmfs'
     group 'cvmfs'
     mode '0600'
-    content node.cvmfs.remote_key
+    backup false
   end
 end
 
