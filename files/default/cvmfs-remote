@@ -21,17 +21,17 @@ if [ "$#" -eq "2" ]; then
   case "$1" in
   publish)
     # Prepare repository for update
-    su cvmfs -c "ssh -qt $repo_name 'sudo cvmfs_server transaction $repo_name'" 
+    ssh -qt $repo_name 'cvmfs_server transaction $repo_name' 
     # sync local data to the corresponding CVMFS server
-    su cvmfs -c "rsync -vtza --exclude-from /cvmfs/$repo_name.exclude --delete --delete-excluded /cvmfs/$repo_name $repo_name:/cvmfs/"
+    rsync -vtza --exclude-from /cvmfs/$repo_name.exclude --delete --delete-excluded /cvmfs/$repo_name $repo_name:/cvmfs/
     # Run publish on the CVMFS server as root, this needs to be 
     # allowed by sudo on the target machine!
-    su cvmfs -c "ssh -qt $repo_name 'sudo cvmfs_server publish'"
+    ssh -qt $repo_name 'sudo cvmfs_server publish'
     # SSH terminal allocation is needed to allow the command 
     # a user switch (su)
     ;;
   resign)
-    su cvmfs -c "ssh -qt $repo_name 'sudo cvmfs_server resign'"
+    ssh -qt $repo_name 'sudo cvmfs_server resign'
     ;;
   *)
     echo 'You can only publish or resign repositories!'
