@@ -15,9 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# The cvmfs user operates all remote actions on the CVMFS servers
-user 'cvmfs' 
-
 # This variable contains the SSH configuration for the "cvmfs" user.
 ssh_config = Hash.new
 # list of all repository maintainers allowed to sync with the servers
@@ -30,7 +27,7 @@ node.cvmfs.remote.each_pair do |repo,config|
   # list of repository maintainers
   maintainers = config[:maintainer]
   group maintainer do
-    members ['cvmfs'] << maintainers
+    members maintainers
   end
 
   directory "/cvmfs/#{repo}" do
@@ -63,24 +60,15 @@ node.cvmfs.remote.each_pair do |repo,config|
 
 end
 
-directory '/home/cvmfs/.ssh' do
-  owner 'cvmfs'
-  group 'cvmfs'
-  mode '0700'
-  recursive true
-end
-
-sys_ssh_config 'cvmfs' do
+sys_ssh_config 'root' do
   config ssh_config
 end
 
 if node.cvmfs.remote_key.empty?
   Chef::Log.warn("No SSH login key to CVMFS servers provided")
 else
-  file '/home/cvmfs/.ssh/id_rsa' do
+  file '/root/.ssh/id_rsa' do
     content node.cvmfs.remote_key.gsub(/^ */,'').gsub(/^$\n/,'')
-    owner 'cvmfs'
-    group 'cvmfs'
     mode '0600'
     backup false
   end
