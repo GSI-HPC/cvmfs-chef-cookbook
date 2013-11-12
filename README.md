@@ -3,7 +3,7 @@ Description
 
 The "cernvm-fs" cookbook deploys and configures [CernVM-FS][1] (CVMFS) infrastructure.
 
-_CernVM File System (CernVM-FS) is a network file system based on HTTP and optimized to deliver software in a fast, scalable, and reliable way. Files and file meta-data are cached and downloaded on demand. Thereby the CernVM-FS decouples the life cycle management of the application software releases from the operating system._
+_CernVM File System (CernVM-FS) is a read-only network file system based on HTTP and optimized to deliver software in a fast, scalable, and reliable way. Files and file meta-data are cached and downloaded on demand._
 
 **Requirements**
 
@@ -18,12 +18,16 @@ _CernVM File System (CernVM-FS) is a network file system based on HTTP and optim
 Usage
 -----
 
-Read the “[Manual Deployment][3]” guide for a very simple example. Deployment and configuration of CVMFS servers is described in the [Server Guide][4]. Mount CVMFS repositories on client nodes as explained in the [Client Guide][5].
+CVMFS contains client-side software to mount a CVMFS “repository” as well as a web-server component to deliver files. A basic manual deployment and configuration with a repository server and a single client is described in [documents/manual.markdown][3]. 
+
+Build CVMFS Debian packages with the [cvmfs-install](files/default/cvmfs-install) script, and upload the deb-files to a local package repository. Deployment and configuration of a CVMFS server is described in [documents/server.markdown][4]. Mount CVMFS repositories on client nodes as explained in [documents.client.markdown][5]. 
+
+The recipe `cernvm-fs::remote` helps to keep software build systems in sync with the corresponding CVMFS server publishing this software (read [documents/remote.markdown][6].
 
 License
 -------
 
-Author: Victor Penso (v.penso@gsi.de)
+Author: Victor Penso
 
 Copyright 2013, GSI, HPC Department
 
@@ -37,5 +41,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 [1]: http://cernvm.cern.ch/portal/filesystem
 [2]: https://github.com/GSI-HPC/sys-chef-cookbook
 [3]: documents/manual.markdown
-[4]: documents/server.makrdown
-[5]: documents/client.makrdown
+[4]: documents/server.markdown
+[5]: documents/client.markdown
+[5]: documents/remote.markdown
