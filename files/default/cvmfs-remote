@@ -29,6 +29,7 @@ if [ "$#" -eq "2" ]; then
     ssh -qt $repo_name 'sudo cvmfs_server publish'
     # SSH terminal allocation is needed to allow the command 
     # a user switch (su)
+    ssh -qt $repo_name "df -h /cvmfs/$repo_name"
     ;;
   resign)
     ssh -qt $repo_name 'sudo cvmfs_server resign'
