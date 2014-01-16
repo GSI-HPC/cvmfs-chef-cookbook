@@ -1,7 +1,7 @@
 Description
 -----------
 
-The "cernvm-fs" cookbook deploys and configures [CernVM-FS][1] (CVMFS) infrastructure.
+The "cernvm-fs" cookbook deploys and configures [CernVM-FS][1] infrastructure.
 
 _CernVM File System (CernVM-FS) is a read-only network file system based on HTTP and optimized to deliver software in a fast, scalable, and reliable way. Files and file meta-data are cached and downloaded on demand._
 
@@ -22,7 +22,7 @@ CVMFS contains client-side software to mount a CVMFS “repository” as well as
 
 Build CVMFS Debian packages with the [cvmfs-install](files/default/cvmfs-install) script, and upload the deb-files to a local package repository. Deployment and configuration of a CVMFS server is described in [documents/server.markdown][4]. Mount CVMFS repositories on client nodes as explained in [documents.client.markdown][5]. 
 
-The recipe `cernvm-fs::remote` helps to keep software build systems in sync with the corresponding CVMFS server publishing this software (read [documents/remote.markdown][6].
+The recipe `cernvm-fs::remote` helps to keep software build systems in sync with the corresponding CVMFS server publishing this software (read [documents/remote.markdown][6]).
 
 License
 -------
@@ -43,4 +43,5 @@ Unless required by applicable law or agreed to in writing, software distributed 
 [3]: documents/manual.markdown
 [4]: documents/server.markdown
 [5]: documents/client.markdown
-[5]: documents/remote.markdown
+[6]: documents/remote.markdown
+

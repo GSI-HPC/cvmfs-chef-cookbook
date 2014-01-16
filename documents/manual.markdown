@@ -1,6 +1,6 @@
 # Deployment
 
-The script `files/default/cvmfs-install` deploys a specific version of CernVM-FS [1] locally. Copy this script to `/usr/local/src` and execute (as root):
+The script `files/default/cvmfs-install` deploys a specific version of [CernVM-FS][1] locally. Copy this script to `/usr/local/src` and execute (as root):
 
     » lsb_release -d
     Description:    Debian GNU/Linux 7.0 (wheezy)
@@ -51,7 +51,7 @@ This install Apache before creating a CernVM-FS file-system repository:
     » ls -1 /cvmfs/repo.devops.test
     new_repository
 
-Details are described in the CernVM-FS Technical Report [2].  In order to update the repository (add/remove content) use the `cvmfs_server` script:
+Details are described in the [CernVM-FS Technical Report][2].  In order to update the repository (add/remove content) use the `cvmfs_server` script:
 
     » cvmfs_server transaction
     » echo "Content" > /cvmfs/repo.devops.test/test.txt
@@ -116,8 +116,6 @@ Mount the repository:
     » cvmfs_config probe
     Probing /cvmfs/repo.devops.test... OK
 
-[1] [CernVM-FS Downloads][1]
-[2] [CernVM-FS Technical Information][2]
 
 [1]: http://cernvm.cern.ch/portal/filesystem
 [2]: http://cernvm.cern.ch/portal/filesystem/techinformation
