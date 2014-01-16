@@ -42,6 +42,9 @@ if [ "$#" -eq "2" ]; then
     # allowed by sudo on the target machine!
 
     ssh -qt $repo_name 'cvmfs_server publish'
+
+    # Show repository revisions
+    ssh -qt $repo_name "cvmfs_server lstags $repo_name | cut -d'|' -f3,4"
     
     # SSH terminal allocation is needed to allow the command 
     # a user switch (su)
