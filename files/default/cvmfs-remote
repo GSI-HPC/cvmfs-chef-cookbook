@@ -20,18 +20,34 @@ if [ "$#" -eq "2" ]; then
   repo_name=$2
   case "$1" in
   publish)
+    
     # Resign repository to make sure transaction works!
+    
     ssh -qt $repo_name 'cvmfs_server resign'
+    
     # Prepare repository for update
+    
     ssh -qt $repo_name 'cvmfs_server transaction $repo_name' 
+
     # sync local data to the corresponding CVMFS server
-    rsync -vtza --exclude-from /cvmfs/$repo_name.exclude --delete --delete-excluded /cvmfs/$repo_name $repo_name:/cvmfs/
+    #   -v, --verbose               increase verbosity
+    #   -t, --times preserve        modification times
+    #   -z, --compress              compress file data during the transfer
+    #   -r, --recursive             recurse into directories
+    #   -l, --links                 copy symlinks as symlinks
+
+    rsync -vtzrl --exclude-from /cvmfs/$repo_name.exclude --delete --delete-excluded /cvmfs/$repo_name $repo_name:/cvmfs/
+
     # Run publish on the CVMFS server as root, this needs to be 
     # allowed by sudo on the target machine!
-    ssh -qt $repo_name 'sudo cvmfs_server publish'
+
+    ssh -qt $repo_name 'cvmfs_server publish'
+    
     # SSH terminal allocation is needed to allow the command 
     # a user switch (su)
+
     ssh -qt $repo_name "df -h /cvmfs/$repo_name"
+
     ;;
   resign)
     ssh -qt $repo_name 'sudo cvmfs_server resign'
