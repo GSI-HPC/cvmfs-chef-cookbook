@@ -20,6 +20,8 @@ if [ "$#" -eq "2" ]; then
   repo_name=$2
   case "$1" in
   publish)
+    # Resign repository to make sure transaction works!
+    ssh -qt $repo_name 'cvmfs_server resign'
     # Prepare repository for update
     ssh -qt $repo_name 'cvmfs_server transaction $repo_name' 
     # sync local data to the corresponding CVMFS server
