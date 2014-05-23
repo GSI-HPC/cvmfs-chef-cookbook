@@ -16,10 +16,10 @@
 # limitations under the License.
 
 # Install from source if a specific version is defined 
-unless node.cvmfs.version.empty?
+if ! node.cvmfs.version.empty?
   include_recipe 'cernvm-fs::install'
-# Otherwise it is assumed a package can be installed
-else
+  # Otherwise it is assumed a package can be installed
+elsif ! node.debian.codename.eql?("jessie")
   package 'cvmfs'
 end
 
