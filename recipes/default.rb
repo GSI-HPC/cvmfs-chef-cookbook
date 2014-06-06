@@ -16,11 +16,19 @@
 # limitations under the License.
 
 # Install from source if a specific version is defined 
-if ! node.cvmfs.version.empty?
+if not node.cvmfs.version.empty?
   include_recipe 'cernvm-fs::install'
-  # Otherwise it is assumed a package can be installed
-elsif ! node.debian.codename.eql?("jessie")
-  package 'cvmfs'
+
+# Otherwise it is assumed a package can be installed
+else 
+  case node.platform_version
+  when /^7/
+    package 'cvmfs'
+  else
+    log "Platfrom version #{node.platform_version} not supported!" do
+      level :warn
+    end
+  end
 end
 
 # Deploy files to the /etc/cvmfs/keys directory
