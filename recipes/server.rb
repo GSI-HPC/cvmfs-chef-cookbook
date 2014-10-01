@@ -31,3 +31,10 @@ node.cvmfs.server.repos.each do |repo|
     not_if do ::File.directory? "/etc/cvmfs/repositories.d/#{repo}" end
   end
 end
+
+# Setup a cron job to resign the repos every 20 days to avoid expired
+# catalog signatures
+cookbook_file '/etc/cron.d/cvmfs-resign' do
+  source 'etc_cron.d_cvmfs-resign'
+  mode 0644
+end
