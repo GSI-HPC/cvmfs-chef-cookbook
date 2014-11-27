@@ -49,7 +49,7 @@ if [ "$#" -eq "2" ]; then
     # SSH terminal allocation is needed to allow the command 
     # a user switch (su)
 
-    ssh -qt $repo_name "df -h /cvmfs/$repo_name"
+    ssh -qt $repo_name "df -h /srv/cvmfs/$repo_name | sed 's|/srv||'"
 
     ;;
   resign)
