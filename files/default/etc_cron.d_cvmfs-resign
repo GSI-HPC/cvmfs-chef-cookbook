@@ -1,3 +1,3 @@
 # Resign cvmfs catalogs on 1st and 15th of each month
 
-00 00 1,15 * * root /usr/bin/cvmfs_server resign
+10 00 1,15 * * root /usr/bin/cvmfs_server resign
