@@ -1,3 +1,4 @@
+name             "cernvm-fs"
 maintainer       "GSI, HPC Department"
 maintainer_email "hpc@gsi.de"
 license          "Apache 2.0"
