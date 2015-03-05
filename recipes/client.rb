@@ -15,13 +15,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node.default[:sys][:autofs][:maps][:'/cvmfs'][:map] = '/etc/auto.cvmfs'
+node.default['sys']['autofs']['maps']['/cvmfs']['map'] = '/etc/auto.cvmfs'
 include_recipe 'sys::autofs'
 
 # Make sure the CMVFS user can use FUSE 
 # to mount a repositories 
-node.default[:sys][:fuse][:config][:mount_max] = 1000
-node.default[:sys][:fuse][:config][:user_allow_other] = ''
+node.default['sys']['fuse']['config']['mount_max'] = 1000
+node.default['sys']['fuse']['config']['user_allow_other'] = ''
 include_recipe 'sys::fuse'
 
 user 'cvmfs' do
