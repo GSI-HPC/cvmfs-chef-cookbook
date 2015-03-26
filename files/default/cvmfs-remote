@@ -23,11 +23,11 @@ if [ "$#" -eq "2" ]; then
     
     # Resign repository to make sure transaction works!
     
-    ssh -qt $repo_name 'cvmfs_server resign'
+    ssh -qt $repo_name 'sudo cvmfs_server resign'
     
     # Prepare repository for update
     
-    ssh -qt $repo_name 'cvmfs_server transaction $repo_name' 
+    ssh -qt $repo_name 'sudo cvmfs_server transaction $repo_name' 
 
     # sync local data to the corresponding CVMFS server
     #   -v, --verbose               increase verbosity
@@ -41,7 +41,7 @@ if [ "$#" -eq "2" ]; then
     # Run publish on the CVMFS server as root, this needs to be 
     # allowed by sudo on the target machine!
 
-    ssh -qt $repo_name 'cvmfs_server publish'
+    ssh -qt $repo_name 'sudo cvmfs_server publish'
 
     # Show repository revisions
     ssh -qt $repo_name "cvmfs_server lstags $repo_name | cut -d'|' -f3,4"
