@@ -33,6 +33,8 @@ group 'fuse' do
   members 'cvmfs'
 end
 
+execute 'modprobe fuse'
+
 directory node.cvmfs.client.default_local.cache_base do
   owner 'cvmfs'
   group 'cvmfs'
