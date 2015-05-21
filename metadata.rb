@@ -4,7 +4,7 @@ maintainer_email "hpc@gsi.de"
 license          "Apache 2.0"
 description      "Deploy and configure  CernVM-FS clients and servers."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.0.11"
+version          "0.1.0"
 depends          "sys"
 depends          "apache2", "~> 1.8"
 supports         "debian", ">= 7.0"
