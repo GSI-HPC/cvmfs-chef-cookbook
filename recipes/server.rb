@@ -17,6 +17,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+
+case node.platform_version
+when /^8/
+  package 'cvmfs-server'
+end
+
 include_recipe 'apache2'
 include_recipe 'apache2::mod_rewrite'
 include_recipe 'apache2::mod_expires'
