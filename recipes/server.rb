@@ -3,7 +3,7 @@
 #
 # Author Victor Penso
 #
-# Copyright 2013, GSI, HPC Department
+# Copyright 2013-2015, GSI, HPC Department
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,18 +18,24 @@
 # limitations under the License.
 
 
-
 case node.platform_version
-when /^8/
+when /^7.*/
+
+  include_recipe 'apache2'
+  include_recipe 'apache2::mod_rewrite'
+  include_recipe 'apache2::mod_expires'
+
+  apache_site "000-default" do
+    enable false
+  end
+
+when /^8.*/
+
+  # There is no need for a specific Apache configuration,
+  # Debian default configuration is sufficient...
+   
   package 'cvmfs-server'
-end
 
-include_recipe 'apache2'
-include_recipe 'apache2::mod_rewrite'
-include_recipe 'apache2::mod_expires'
-
-apache_site "000-default" do
-  enable false
 end
 
 # Initialize the repositories unless they exist
