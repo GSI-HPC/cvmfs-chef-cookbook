@@ -1,7 +1,7 @@
 # Cookbook Name:: cernvm-fs
 # Recipe:: client
 # Author:: Victor Penso
-# Copyright:: 2013, GSI, HPC Department
+# Copyright:: 2013-2015, GSI, HPC Department
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,8 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-node.default['sys']['autofs']['maps']['/cvmfs']['map'] = '/etc/auto.cvmfs'
-include_recipe 'sys::autofs'
+
+case node.platform_version
+when /^7.*/
+  node.default['sys']['autofs']['maps']['/cvmfs']['map'] = '/etc/auto.cvmfs'
+  include_recipe 'sys::autofs'
+end
 
 # Make sure the CMVFS user can use FUSE 
 # to mount a repositories 
