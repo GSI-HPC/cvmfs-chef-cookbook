@@ -15,15 +15,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Install from source if a specific version is defined 
+# Install from source if a specific version is defined
 if not node.cvmfs.version.empty?
   include_recipe 'cernvm-fs::install'
 
 # Otherwise it is assumed a package can be installed
-else 
+else
   case node.platform_version
   when /^7/
-    package 'cvmfs'
+    if node.cvmfs.server.repos.empty?
+      package 'cvmfs-client'
+    else
+      package 'cvmfs'
+    end
   when /^8/
     package 'cvmfs-client'
   else
