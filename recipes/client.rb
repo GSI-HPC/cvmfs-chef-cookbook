@@ -35,6 +35,7 @@ end
 
 group 'fuse' do
   members 'cvmfs'
+  append true
 end
 
 execute 'modprobe fuse'
