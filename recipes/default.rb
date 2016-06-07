@@ -16,14 +16,14 @@
 # limitations under the License.
 
 # Install from source if a specific version is defined
-if not node.cvmfs.version.empty?
+if node[:cvmfs][:version]
   include_recipe 'cernvm-fs::install'
 
 # Otherwise it is assumed a package can be installed
 else
-  case node.platform_version
+  case node[:platform_version]
   when /^7/
-    if node.cvmfs.server.repos.empty?
+    if node[:cvmfs][:server][:repos].empty?
       package 'cvmfs-client'
     else
       package 'cvmfs'
@@ -31,21 +31,21 @@ else
   when /^8/
     package 'cvmfs-client'
   else
-    log "Platfrom version #{node.platform_version} not supported!" do
+    log "Platform version #{node[:platform_version]} not supported!" do
       level :warn
     end
   end
 end
 
 # Deploy files to the /etc/cvmfs/keys directory
-node.cvmfs[:keys].each do |name,key|
+node[:cvmfs][:keys].each do |name,key|
   file "/etc/cvmfs/keys/#{name}" do
     mode "0644"
     content key.gsub(/^ */,'')
   end
 end
 
-if node.cvmfs.server.repos.empty?
+if node[:cvmfs][:server][:repos].empty?
   include_recipe 'cernvm-fs::client'
 else
   include_recipe 'cernvm-fs::server'
