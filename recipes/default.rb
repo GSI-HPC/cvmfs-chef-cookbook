@@ -38,6 +38,10 @@ else
 end
 
 # Deploy files to the /etc/cvmfs/keys directory
+directory '/etc/cvmfs/keys' do
+  recursive true
+end
+
 node[:cvmfs][:keys].each do |name,key|
   file "/etc/cvmfs/keys/#{name}" do
     mode "0644"
