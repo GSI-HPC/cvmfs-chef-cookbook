@@ -33,9 +33,25 @@ when /^8.*/
 
   # There is no need for a specific Apache configuration,
   # Debian default configuration is sufficient...
-   
+
   package 'cvmfs-server'
 
+  template '/etc/apache2/conf-available/cvmfs-fix-mime-type.conf' do
+    source 'etc_apache2_conf-available_cvmfs-fix-mime-type.conf.erb'
+    mode 0644
+    notifies :run, 'execute[enable cvmfs fix]', :immediately
+  end
+
+  execute 'enable cvmfs fix' do
+    command 'a2enconf cvmfs-fix-mime-type'
+    action :nothing
+    notifies :reload, 'service[apache2]', :immediately
+  end
+
+  service 'apache2' do
+    supports ({ :reload => true })
+    action [:enable, :start]
+  end
 end
 
 # Initialize the repositories unless they exist
