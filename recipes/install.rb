@@ -17,7 +17,7 @@
 
 unless node.cvmfs.version.empty?
 
-  unless ::File.exists? '/etc/cvmfs/default.conf'
+  unless ::File.exist? '/etc/cvmfs/default.conf'
     cookbook_file '/usr/local/src/cvmfs-install' do
       source 'cvmfs-install'
       mode '0755'
