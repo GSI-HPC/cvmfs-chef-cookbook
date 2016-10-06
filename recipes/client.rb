@@ -34,8 +34,10 @@ user 'cvmfs' do
 end
 
 group 'fuse' do
+  # this should be a system group (ie. gid < 1000)
+  system  true
   members 'cvmfs'
-  append true
+  append  true
 end
 
 execute 'modprobe fuse'
