@@ -17,8 +17,6 @@
 
 # This variable contains the SSH configuration for the "cvmfs" user.
 ssh_config = Hash.new
-# list of all repository maintainers allowed to sync with the servers
-sudoers = String.new
 
 node.cvmfs.remote.each_pair do |repo,config|
 
@@ -42,7 +40,7 @@ node.cvmfs.remote.each_pair do |repo,config|
     group maintainer
     content ".svn/*\n.libs/*\n.deps/*\n*.o\n"
     # The excludes for Rsync will be modified by users eventually 
-    not_if do ::File.exists? rsync_exclude end
+    not_if do ::File.exist? rsync_exclude end
   end
 
   # Define a host alias for each repository in the SSH configuration
