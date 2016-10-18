@@ -16,7 +16,7 @@
 # limitations under the License.
 
 # Install from source if a specific version is defined
-if node[:cvmfs][:version]
+unless node[:cvmfs][:version].empty?
   include_recipe 'cernvm-fs::install'
 else
   # Otherwise it is assumed a package can be installed
