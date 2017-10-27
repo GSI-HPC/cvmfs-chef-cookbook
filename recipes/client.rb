@@ -16,7 +16,7 @@
 # limitations under the License.
 
 
-case node.platform_version
+case node['platform_version']
 when /^7.*/
   node.default['sys']['autofs']['maps']['/cvmfs']['map'] = '/etc/auto.cvmfs'
   include_recipe 'sys::autofs'
