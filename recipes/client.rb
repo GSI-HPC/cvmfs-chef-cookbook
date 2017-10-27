@@ -42,7 +42,7 @@ end
 
 execute 'modprobe fuse'
 
-directory node.cvmfs.client.default_local.cache_base do
+directory node['cvmfs']['client']['default_local']['cache_base'] do
   owner 'cvmfs'
   group 'cvmfs'
   mode '0755'
@@ -52,17 +52,17 @@ end
 template '/etc/cvmfs/default.local' do
   source 'etc_cvmfs_default.local.erb'
   mode "0644"
-  variables( 
-    :repos => node.cvmfs.client.config_d.keys,
-    :config => node.cvmfs.client.default_local
+  variables(
+    :repos => node['cvmfs']['client']['config_d'].keys,
+    :config => node['cvmfs']['client']['default_local']
   )
 end
 
 directory '/etc/cvmfs/config.d'
 
 # Each repository needs its configuration file
-unless node.cvmfs.client.config_d.empty?
-  node.cvmfs.client.config_d.each do |repo,config|
+unless node['cvmfs']['client']['config_d'].empty?
+  node['cvmfs']['client']['config_d'].each do |repo,config|
 
     config['http_proxy'] = 'DIRECT' unless config.has_key? 'http_proxy'
 
@@ -75,4 +75,3 @@ unless node.cvmfs.client.config_d.empty?
 
   end
 end
-
