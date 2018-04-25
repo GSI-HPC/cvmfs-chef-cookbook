@@ -49,7 +49,7 @@ when /^8.*/
   end
 
   service 'apache2' do
-    supports ({ :reload => true })
+    supports reload: true
     action [:enable, :start]
   end
 end
