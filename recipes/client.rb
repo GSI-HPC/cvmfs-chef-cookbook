@@ -43,7 +43,9 @@ group 'fuse' do
   append  true
 end
 
-execute 'modprobe fuse'
+execute 'modprobe fuse' do
+  not_if 'grep -q "^fuse\>" /proc/modules'
+end
 
 directory node['cvmfs']['client']['default_local']['cache_base'] do
   owner 'cvmfs'
