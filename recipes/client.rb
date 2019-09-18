@@ -18,10 +18,10 @@
 
 case node['platform_version']
 when /^7.*/
-  node.default['sys']['autofs']['maps']['/cvmfs']['map'] = '/etc/auto.cvmfs'
+  node.default['sys']['autofs']['maps']['cvmfs'] = {}
   include_recipe 'sys::autofs'
 when /^9.*/
-  node.default['sys']['autofs']['maps']['/cvmfs']['map'] = '/etc/auto.cvmfs'
+  node.default['sys']['autofs']['maps']['cvmfs'] = {}
   include_recipe 'sys::autofs'
 end
 
