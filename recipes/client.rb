@@ -1,7 +1,16 @@
+#
 # Cookbook Name:: cernvm-fs
 # Recipe:: client
-# Author:: Victor Penso
-# Copyright:: 2013-2015, GSI, HPC Department
+#
+# Copyright 2013-2019 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+#
+# Authors:
+#  Matteo Dessalvi <m.dessalvi@gsi.de>
+#  Christopher Huhn <C.Huhn@gsi.de>
+#  Walter Karig <w.karig@gsi.de>
+#  Bastian Neuburger <b.neuburger@gsi.de>
+#  Matthias Pausch <m.pausch@gsi.de>
+#  Victor Penso <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
