@@ -21,7 +21,9 @@ when /^7.*/
   node.default['sys']['autofs']['maps']['cvmfs'] = {}
   include_recipe 'sys::autofs'
 when /^9.*/
-  node.default['sys']['autofs']['maps']['cvmfs'] = {}
+  node.default_unless['sys']['autofs']['maps']['cvmfs'] = {
+    mapname: '/usr/lib/cvmfs/auto.cvmfs'
+  }
   include_recipe 'sys::autofs'
 end
 
