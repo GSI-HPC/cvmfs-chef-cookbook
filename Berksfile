@@ -2,4 +2,5 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-cookbook 'sys',     git: 'https://git.gsi.de/chef/cookbooks/sys.git'
+cookbook 'sys',     git: 'https://git.gsi.de/chef/cookbooks/sys.git',
+         branch: '8-chaos-in-sys-autofs'
