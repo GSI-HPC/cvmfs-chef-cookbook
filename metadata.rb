@@ -6,5 +6,5 @@ description      "Deploy and configure CernVM-FS clients and servers."
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.2.3"
 depends          "sys"
-depends          "apache2"
+depends          "apache2", '< 6'
 supports         "debian", ">= 7.0"
