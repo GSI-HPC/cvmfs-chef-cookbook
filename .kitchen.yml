@@ -20,6 +20,13 @@ verifier:
   ruby_bindir: /usr/bin
 
 platforms:
+  - name: buster64
+    driver:
+      box: debian/buster64
+      provider: libvirt
+      provision: true
+      vagrantfiles:
+      - vagrant.rb
   - name: stretch64
     driver:
       box: debian/stretch64
