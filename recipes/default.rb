@@ -30,7 +30,7 @@ else
   when /^8/
     package 'cvmfs-client'
   when /^9/
-    package 'cvmfs-client'
+    package node['cvmfs']['client']['package']
   else
     log "Platform version #{node[:platform_version]} not supported!" do
       level :warn
