@@ -1,7 +1,15 @@
+#
 # Cookbook Name:: cernvm-fs
 # Recipe:: default
-# Author:: Victor Penso
-# Copyright:: 2013, GSI, HPC Department
+#
+# Copyright 2013-2020 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+#
+# Authors:
+#  Matteo Dessalvi    <m.dessalvi@gsi.de>
+#  Christopher Huhn   <C.Huhn@gsi.de>
+#  Dennis Klein       <d.klein@gsi.de>
+#  Matthias Pausch    <m.pausch@gsi.de>
+#  Victor Penso       <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,28 +22,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
 # Install from source if a specific version is defined
 unless node[:cvmfs][:version].empty?
   include_recipe 'cernvm-fs::install'
 else
-  # Otherwise it is assumed a package can be installed
-  case node[:platform_version]
-  when /^7/
-    if node[:cvmfs][:server][:repos].empty?
-      package 'cvmfs-client'
-    else
-      package 'cvmfs'
-    end
-  when /^8/
-    package 'cvmfs-client'
-  when /^9/
-    package 'cvmfs-client'
-  else
-    log "Platform version #{node[:platform_version]} not supported!" do
-      level :warn
-    end
-  end
+  package 'cvmfs'
 end
 
 # Deploy files to the /etc/cvmfs/keys directory
