@@ -2,6 +2,8 @@
 #
 #
 
+package 'gnupg'
+
 # Deploy the APT key for `gsi-repository`
 sys_apt_key "Deploy APT key for the GSI package repository" do
   key <<KEY
