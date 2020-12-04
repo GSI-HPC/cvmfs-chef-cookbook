@@ -82,7 +82,8 @@ directory '/etc/cvmfs/domain.d'
 
 node['cvmfs']['client']['domain_d'].each do |repo, attrs|
 
-  config = { http_proxy: 'DIRECT' }
+  # node attributes are strings
+  config = { 'http_proxy' => 'DIRECT' }
   config.merge!(attrs)
 
   template "/etc/cvmfs/domain.d/#{repo}.conf" do
@@ -102,7 +103,8 @@ directory '/etc/cvmfs/config.d'
 # Each repository needs its configuration file
 node['cvmfs']['client']['config_d'].each do |repo, attrs|
 
-  config = { http_proxy: 'DIRECT' }
+  # node attributes are strings
+  config = { 'http_proxy' => 'DIRECT' }
   config.merge!(attrs)
 
   template "/etc/cvmfs/config.d/#{repo}.conf" do
