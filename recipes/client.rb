@@ -2,7 +2,7 @@
 # Cookbook Name:: cernvm-fs
 # Recipe:: client
 #
-# Copyright 2013-2019 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+# Copyright 2013-2020 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
 #
 # Authors:
 #  Matteo Dessalvi <m.dessalvi@gsi.de>
@@ -74,20 +74,43 @@ template '/etc/cvmfs/default.local' do
   )
 end
 
+
+#
+# Domain configs:
+#
+directory '/etc/cvmfs/domain.d'
+
+node['cvmfs']['client']['domain_d'].each do |repo, attrs|
+
+  # node attributes are strings
+  config = { 'http_proxy' => 'DIRECT' }
+  config.merge!(attrs)
+
+  template "/etc/cvmfs/domain.d/#{repo}.conf" do
+    source 'etc_cvmfs_config.d_generic.conf.erb'
+    mode "0644"
+    variables(config: config)
+  end
+
+end
+
+
+#
+# Repository configs
+#
 directory '/etc/cvmfs/config.d'
 
 # Each repository needs its configuration file
-unless node['cvmfs']['client']['config_d'].empty?
-  node['cvmfs']['client']['config_d'].each do |repo,config|
+node['cvmfs']['client']['config_d'].each do |repo, attrs|
 
-    config['http_proxy'] = 'DIRECT' unless config.has_key? 'http_proxy'
+  # node attributes are strings
+  config = { 'http_proxy' => 'DIRECT' }
+  config.merge!(attrs)
 
-    template "/etc/cvmfs/config.d/#{repo}.conf" do
-      source 'etc_cvmfs_config.d_generic.conf.erb'
-      mode "0644"
-      variables( :repo => repo, :config => config )
-    end
-
-
+  template "/etc/cvmfs/config.d/#{repo}.conf" do
+    source 'etc_cvmfs_config.d_generic.conf.erb'
+    mode "0644"
+    variables(config: config)
   end
+
 end
