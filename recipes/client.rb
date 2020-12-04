@@ -80,9 +80,10 @@ end
 #
 directory '/etc/cvmfs/domain.d'
 
-node['cvmfs']['client']['domain_d'].each do |repo,config|
+node['cvmfs']['client']['domain_d'].each do |repo, attrs|
 
-  config['http_proxy'] = 'DIRECT' unless config.has_key? 'http_proxy'
+  config = { http_proxy: 'DIRECT' }
+  config.merge!(attrs)
 
   template "/etc/cvmfs/domain.d/#{repo}.conf" do
     source 'etc_cvmfs_config.d_generic.conf.erb'
@@ -99,9 +100,10 @@ end
 directory '/etc/cvmfs/config.d'
 
 # Each repository needs its configuration file
-node['cvmfs']['client']['config_d'].each do |repo,config|
+node['cvmfs']['client']['config_d'].each do |repo, attrs|
 
-  config['http_proxy'] = 'DIRECT' unless config.has_key? 'http_proxy'
+  config = { http_proxy: 'DIRECT' }
+  config.merge!(attrs)
 
   template "/etc/cvmfs/config.d/#{repo}.conf" do
     source 'etc_cvmfs_config.d_generic.conf.erb'
