@@ -25,11 +25,11 @@
 # limitations under the License.
 
 
-case node['platform_version']
-when /^7.*/
+case node['platform_version'].to_i
+when 7
   node.default['sys']['autofs']['maps']['cvmfs'] = {}
   include_recipe 'sys::autofs'
-when /^9.*/
+when 9..10
   node.default_unless['sys']['autofs']['maps']['cvmfs'] = {
     mapname: '/usr/lib/cvmfs/auto.cvmfs'
   }
