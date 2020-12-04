@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe package('cvmfs-client') do
+describe package('cvmfs') do
   it { should be_installed }
 end
 
