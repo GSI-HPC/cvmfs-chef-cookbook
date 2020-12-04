@@ -5,12 +5,12 @@
 # Copyright 2013-2020 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
 #
 # Authors:
-#  Matteo Dessalvi <m.dessalvi@gsi.de>
-#  Christopher Huhn <C.Huhn@gsi.de>
-#  Walter Karig <w.karig@gsi.de>
+#  Matteo Dessalvi   <m.dessalvi@gsi.de>
+#  Christopher Huhn  <c.huhn@gsi.de>
+#  Walter Karig      <w.karig@gsi.de>
 #  Bastian Neuburger <b.neuburger@gsi.de>
-#  Matthias Pausch <m.pausch@gsi.de>
-#  Victor Penso <v.penso@gsi.de>
+#  Matthias Pausch   <m.pausch@gsi.de>
+#  Victor Penso      <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@
 # limitations under the License.
 
 
-case node['platform_version']
-when /^7.*/
+case node['platform_version'].to_i
+when 7
   node.default['sys']['autofs']['maps']['cvmfs'] = {}
   include_recipe 'sys::autofs'
-when /^9.*/
+when 9..10
   node.default_unless['sys']['autofs']['maps']['cvmfs'] = {
     mapname: '/usr/lib/cvmfs/auto.cvmfs'
   }
