@@ -7,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://git.gsi.de:chef/cookbooks/cernvm-fs/'
 issues_url       'https://git.gsi.de:chef/cookbooks/cernvm-fs/issues'
 
-version          "0.4.0"
+version          "0.5.0"
 
 depends          "sys", '>= 1.51.0'
 depends          "apache2", '< 6.0'

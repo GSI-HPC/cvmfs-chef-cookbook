@@ -2,15 +2,15 @@
 # Cookbook Name:: cernvm-fs
 # Recipe:: client
 #
-# Copyright 2013-2020 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+# Copyright 2013-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
 #
 # Authors:
-#  Matteo Dessalvi <m.dessalvi@gsi.de>
-#  Christopher Huhn <C.Huhn@gsi.de>
-#  Walter Karig <w.karig@gsi.de>
+#  Matteo Dessalvi   <m.dessalvi@gsi.de>
+#  Christopher Huhn  <c.huhn@gsi.de>
+#  Walter Karig
 #  Bastian Neuburger <b.neuburger@gsi.de>
-#  Matthias Pausch <m.pausch@gsi.de>
-#  Victor Penso <v.penso@gsi.de>
+#  Matthias Pausch   <m.pausch@gsi.de>
+#  Victor Penso      <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -65,6 +65,9 @@ directory node['cvmfs']['client']['default_local']['cache_base'] do
   recursive true
 end
 
+# make sure CVMFS_HTTP_PROXY is defined:
+node.default['cvmfs']['client']['default_local']['http_proxy'] ||= 'DIRECT'
+
 template '/etc/cvmfs/default.local' do
   source 'etc_cvmfs_default.local.erb'
   mode "0644"
@@ -80,11 +83,7 @@ end
 #
 directory '/etc/cvmfs/domain.d'
 
-node['cvmfs']['client']['domain_d'].each do |repo, attrs|
-
-  # node attributes are strings
-  config = { 'http_proxy' => 'DIRECT' }
-  config.merge!(attrs)
+node['cvmfs']['client']['domain_d'].each do |repo, config|
 
   template "/etc/cvmfs/domain.d/#{repo}.conf" do
     source 'etc_cvmfs_config.d_generic.conf.erb'
@@ -101,11 +100,7 @@ end
 directory '/etc/cvmfs/config.d'
 
 # Each repository needs its configuration file
-node['cvmfs']['client']['config_d'].each do |repo, attrs|
-
-  # node attributes are strings
-  config = { 'http_proxy' => 'DIRECT' }
-  config.merge!(attrs)
+node['cvmfs']['client']['config_d'].each do |repo, config|
 
   template "/etc/cvmfs/config.d/#{repo}.conf" do
     source 'etc_cvmfs_config.d_generic.conf.erb'
