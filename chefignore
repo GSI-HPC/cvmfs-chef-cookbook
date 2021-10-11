@@ -1,0 +1,10 @@
+*~
+.git
+.gitlab-ci.yml
+.kitchen/*
+.kitchen.yml
+Berksfile
+Berksfile.lock
+Rakefile
+test
+vagrant.rb
