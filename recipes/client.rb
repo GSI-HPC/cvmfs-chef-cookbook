@@ -70,7 +70,7 @@ directory node['cvmfs']['client']['default_local']['cache_base'] do
 end
 
 # make sure CVMFS_HTTP_PROXY is defined:
-node.default['cvmfs']['client']['default_local']['http_proxy'] ||= 'DIRECT'
+node.default_unless['cvmfs']['client']['default_local']['http_proxy'] = 'DIRECT'
 
 template '/etc/cvmfs/default.local' do
   source 'etc_cvmfs_default.local.erb'
