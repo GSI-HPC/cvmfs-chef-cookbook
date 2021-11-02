@@ -31,3 +31,8 @@ end
 describe file('/cvmfs/cvmfs-config.cern.ch') do
   it { should be_directory }
 end
+
+describe command('cvmfs_config probe') do
+  its(:exit_status) { should be_zero }
+  its(:stderr) { should be_empty }
+end
