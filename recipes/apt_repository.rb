@@ -51,7 +51,7 @@ TqAhv92xvOIhIXrSMzovp29qSkZP
 =O1Gt
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
-end
+  end
 
   sys_apt_repository 'cvmfs' do
     config  "deb\thttp://mirror.gsi.de/distrib/gsi-repository "\
