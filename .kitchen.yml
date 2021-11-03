@@ -49,3 +49,7 @@ suites:
       - recipe[cernvm-fs::apt_repository]
       - recipe[cernvm-fs]
     attributes:
+      cvmfs:
+        client:
+          default_local:
+            http_proxy: 'http://proxy.gsi.de:3128/'
