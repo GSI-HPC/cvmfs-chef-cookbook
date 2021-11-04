@@ -62,7 +62,7 @@ else
   package 'apt-transport-https'
 
   apt_repository 'cvmfs' do
-    uri          'https://cvmrepo.web.cern.ch/cvmrepo/apt'
+    uri          node['cvmfs']['apt']['repository']['uri']
     distribution node['lsb']['codename'] + '-prod'
     components   %w[main]
     key          'cvmfs-repo.asc'
