@@ -64,3 +64,9 @@ describe command('cvmfs_config probe') do
   its(:exit_status) { should be_zero }
   its(:stderr) { should be_empty }
 end
+
+describe file('/etc/cvmfs/domain.d/example.org.local') do
+  it { should exist }
+  it { should_not contain 'CVMFS_LOCAL=' }
+  it { should contain 'CVMFS_FOO="bar"' }
+end

@@ -95,7 +95,12 @@ directory '/etc/cvmfs/domain.d'
 
 node['cvmfs']['client']['domain_d'].each do |repo, config|
 
-  template "/etc/cvmfs/domain.d/#{repo}.conf" do
+  # config['local'] = true will create a repo.local
+  #  leaving an existing repo.conf intact:
+  domain_d = "/etc/cvmfs/domain.d/" + repo +
+             (config['local'] ? '.local' : '.conf')
+
+  template domain_d do
     source 'etc_cvmfs_config.d_generic.conf.erb'
     mode "0644"
     variables(config: config)

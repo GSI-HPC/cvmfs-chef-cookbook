@@ -53,3 +53,7 @@ suites:
         client:
           default_local:
             http_proxy: 'http://proxy.gsi.de:3128/'
+          domain_d:
+            example.org:
+              local: true
+              foo: bar
