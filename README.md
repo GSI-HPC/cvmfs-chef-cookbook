@@ -27,9 +27,16 @@ The recipe `cernvm-fs::remote` helps to keep software build systems in sync with
 License
 -------
 
-Author: Victor Penso
+Copyright 2013-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
 
-Copyright 2013, GSI, HPC Department
+Authors:
+  Matteo Dessalvi <m.dessalvi@gsi.de>
+  Christopher Huhn <c.huhn@gsi.de>
+  Walter Karig
+  Dennis Klein <d.klein@gsi.de>
+  Bastian Neuburger <b.neuburger@gsi.de>
+  Matthias Pausch <m.pausch@gsi.de>
+  Victor Penso <v.penso@gsi.de>
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
