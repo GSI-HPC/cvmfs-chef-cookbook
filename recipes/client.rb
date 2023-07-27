@@ -2,7 +2,7 @@
 # Cookbook Name:: cernvm-fs
 # Recipe:: client
 #
-# Copyright 2013-2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+# Copyright 2013-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
 #
 # Authors:
 #  Matteo Dessalvi   <m.dessalvi@gsi.de>
@@ -53,7 +53,7 @@ node.default['sys']['fuse']['config']['user_allow_other'] = ''
 include_recipe 'sys::fuse'
 
 user 'cvmfs' do
-  shell '/bin/bash'
+  shell '/usr/sbin/nologin'
   system true
 end
 
