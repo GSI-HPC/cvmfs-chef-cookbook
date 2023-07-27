@@ -1,7 +1,7 @@
 begin
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new do |task|
-    task.options = ['--lint']
+    task.options = %w[--display-cop-names --display-style-guide --lint]
   end
 rescue LoadError
   desc 'rubocop rake task not available'
@@ -14,7 +14,12 @@ begin
   require 'foodcritic'
   FoodCritic::Rake::LintTask.new do |task|
     task.options = {
-      :exclude_paths => ['example_config/**/*']
+      context: true,
+      exclude_paths: ['example_config/**/*'],
+      # FC069: no standard license
+      # FC071: no LICENSE file
+      # FC079: no OSI approved license
+      tags: %w[~FC069 ~FC071 ~FC078]
     }
   end
 rescue LoadError

@@ -2,7 +2,8 @@ Vagrant.configure(2) do |config|
   # install the Debian-provided Chef package
   config.vm.provision 'shell', inline: <<-SHELL
      sudo apt-get -qq update
-     sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y install chef
+     sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y install ruby --no-install-recommends
+     sudo DEBIAN_FRONTEND=noninteractive apt-get -qq -y install chef --no-install-recommends
      sudo gem install chef-vault --version '< 4'
   SHELL
 

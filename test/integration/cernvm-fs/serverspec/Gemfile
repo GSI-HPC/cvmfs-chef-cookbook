@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 ruby_version = Gem::Version.new(RUBY_VERSION)
 
