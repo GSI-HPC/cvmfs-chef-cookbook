@@ -29,7 +29,7 @@ case node['platform_version'].to_i
 when 7
   node.default['sys']['autofs']['maps']['cvmfs'] = {}
   include_recipe 'sys::autofs'
-when 9,10
+when 9..99
   directory '/etc/auto.master.d'
 
   file '/etc/auto.master.d/cvmfs.autofs' do
@@ -45,27 +45,28 @@ EOF
   end
 end
 
-
-# Make sure the CMVFS user can use FUSE
-# to mount a repositories
-node.default['sys']['fuse']['config']['mount_max'] = 1000
-node.default['sys']['fuse']['config']['user_allow_other'] = ''
-include_recipe 'sys::fuse'
-
 user 'cvmfs' do
   shell '/usr/sbin/nologin'
   system true
 end
 
-group 'fuse' do
-  # this should be a system group (ie. gid < 1000)
-  system  true
-  members 'cvmfs'
-  append  true
-end
+if node['platform'] == 'debian' && node['platform_version'].to_i < 11
+  # Make sure the CMVFS user can use FUSE
+  # to mount a repositories
+  node.default['sys']['fuse']['config']['mount_max'] = 1000
+  node.default['sys']['fuse']['config']['user_allow_other'] = ''
+  include_recipe 'sys::fuse'
 
-execute 'modprobe fuse' do
-  not_if 'grep -q "^fuse\>" /proc/modules'
+  group 'fuse' do
+    # this should be a system group (ie. gid < 1000)
+    system  true
+    members 'cvmfs'
+    append  true
+  end
+
+  execute 'modprobe fuse' do
+    not_if 'grep -q "^fuse\>" /proc/modules'
+  end
 end
 
 directory node['cvmfs']['client']['default_local']['cache_base'] do
