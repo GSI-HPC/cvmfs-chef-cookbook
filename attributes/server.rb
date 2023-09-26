@@ -1,1 +1,1 @@
-default[:cvmfs][:server][:repos] = Array.new 
+default['cvmfs']['server']['repos'] = []

@@ -1,2 +1,2 @@
-default[:cvmfs][:remote] = Mash.new
-default[:cvmfs][:remote_key] = String.new
+default['cvmfs']['remote'] = {}
+default['cvmfs']['remote_key'] = ''

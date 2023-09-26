@@ -1,2 +1,2 @@
-default[:cvmfs][:version] = String.new
-default[:cvmfs][:keys] = Mash.new
+default['cvmfs']['version'] = ''
+default['cvmfs']['keys'] = {}

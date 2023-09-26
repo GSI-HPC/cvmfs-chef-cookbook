@@ -1,9 +1,14 @@
-# Cookbook Name:: cernvm-fs
+#
+# Cookbook:: cernvm-fs
 # Recipe:: server
 #
-# Author Victor Penso
+# Copyright:: 2013-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
 #
-# Copyright 2013-2015, GSI, HPC Department
+# Authors:
+#  Christopher Huhn    <c.huhn@gsi.de>
+#  Dennis Klein        <d.klein@gsi.de>
+#  Bastian Neuburger   <b.neuburger@gsi.de>
+#  Victor Penso        <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +22,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-case node.platform_version
+case node['platform_version']
 when /^7.*/
 
   include_recipe 'apache2'
@@ -55,7 +59,7 @@ when /^8.*/
 end
 
 # Initialize the repositories unless they exist
-node.cvmfs.server.repos.each do |repo|
+node['cvmfs']['server']['repos'].each do |repo|
   execute "cvmfs_server mkfs -o root #{repo}" do
     not_if do ::File.directory? "/etc/cvmfs/repositories.d/#{repo}" end
   end

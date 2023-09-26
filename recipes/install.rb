@@ -1,7 +1,12 @@
-# Cookbook Name:: cernvm-fs
-# Recipe:: default
-# Author:: Victor Penso
-# Copyright:: 2013, GSI, HPC Department
+#
+# Cookbook:: cernvm-fs
+# Recipe:: install
+#
+# Copyright:: 2013-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+#
+# Authors:
+#  Christopher Huhn   <c.huhn@gsi.de>
+#  Victor Penso       <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,17 +20,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-unless node.cvmfs.version.empty?
+return if node['cvmfs']['version'].empty?
 
-  unless ::File.exist? '/etc/cvmfs/default.conf'
-    cookbook_file '/usr/local/src/cvmfs-install' do
-      source 'cvmfs-install'
-      mode '0755'
-    end
-    # This is a self-contained shell script installing 
-    # CVMFS from a source code tar ball downloaded
-    # from the developers web-site.
-    execute "/usr/local/src/cvmfs-install #{node.cvmfs.version}"
+unless ::File.exist? '/etc/cvmfs/default.conf'
+  cookbook_file '/usr/local/src/cvmfs-install' do
+    source 'cvmfs-install'
+    mode '0755'
   end
-
+  # This is a self-contained shell script installing
+  # CVMFS from a source code tar ball downloaded
+  # from the developers web-site.
+  execute "/usr/local/src/cvmfs-install #{node['cvmfs']['version']}"
 end

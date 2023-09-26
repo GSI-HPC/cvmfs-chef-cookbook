@@ -1,7 +1,12 @@
-# Cookbook Name:: cernvm-fs
+#
+# Cookbook:: cernvm-fs
 # Recipe:: remote
-# Author:: Victor Penso
-# Copyright:: 2013, GSI, HPC Department
+#
+# Copyright:: 2013-2023 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH
+#
+# Authors:
+#  Christopher Huhn   <c.huhn@gsi.de>
+#  Victor Penso       <v.penso@gsi.de>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +23,7 @@
 # This variable contains the SSH configuration for the "cvmfs" user.
 ssh_config = Hash.new
 
-node.cvmfs.remote.each_pair do |repo,config|
+node['cvmfs']['remote'].each_pair do |repo,config|
 
   # by convention the maintainer group is called like the repository
   maintainer = repo.split('.')[0]
@@ -53,7 +58,7 @@ node.cvmfs.remote.each_pair do |repo,config|
   # Allow all maintainers to execute the remote publishing script
   sys_sudo maintainer do
     users maintainer.upcase => maintainers
-    rules ["#{maintainer.upcase} #{node.fqdn}=NOPASSWD:/sbin/cvmfs-remote * #{repo}"]
+    rules ["#{maintainer.upcase} #{node['fqdn']}=NOPASSWD:/sbin/cvmfs-remote * #{repo}"]
   end
 
 end
@@ -62,11 +67,11 @@ sys_ssh_config 'root' do
   config ssh_config
 end
 
-if node.cvmfs.remote_key.empty?
+if node['cvmfs']['remote_key'].empty?
   Chef::Log.warn("No SSH login key to CVMFS servers provided")
 else
   file '/root/.ssh/id_rsa' do
-    content node.cvmfs.remote_key.gsub(/^ */,'').gsub(/^$\n/,'')
+    content node['cvmfs']['remote_key'].gsub(/^ */,'').gsub(/^$\n/,'')
     mode '0600'
     backup false
   end
@@ -81,4 +86,3 @@ end
 link "/sbin/cvmfs" do
   to "/sbin/cvmfs-remote"
 end
-
